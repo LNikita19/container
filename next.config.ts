@@ -1,6 +1,8 @@
 const { NextFederationPlugin } = require("@module-federation/nextjs-mf");
-
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Required when deploying to Vercel with module federation
+  output: "standalone",
   webpack(config: any, options: any) {
     const { isServer } = options;
 
@@ -18,11 +20,15 @@ module.exports = {
         shared: {
           react: { singleton: true, requiredVersion: false },
           "react-dom": { singleton: true, requiredVersion: false },
-        
+
         },
       })
     );
 
     return config;
   },
+  experimental: {
+    outputFileTracingRoot: __dirname, // 👈 fixes multiple lockfiles warning
+  },
 };
+module.exports = nextConfig;

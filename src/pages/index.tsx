@@ -2,7 +2,7 @@
 
 import type { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
-
+import Link from "next/link";
 function decodeUser(token: string | undefined | null): string | null {
   if (!token) return null;
   try {
@@ -14,15 +14,23 @@ function decodeUser(token: string | undefined | null): string | null {
 }
 
 export default function Home({ user }: { user: string }) {
+   const goTo = (path: string) => {
+    window.location.href = path;
+  };
   return (
     <div style={{ padding: 24 }}>
       <h1>Host App</h1>
       <p>Welcome, <b>{user}</b></p>
-
-      <p style={{ marginTop: 16 }}>
-        <a href="/dashboard">Go to Remote “dashboard”</a> &nbsp;|&nbsp;{" "}
-        <a href="/remote2">Go to Remote “remote2”</a> &nbsp;|&nbsp;{" "}
-        <a href="/api/logout">Logout</a>
+    <p style={{ marginTop: 16 }}>
+        <button onClick={() => goTo("/dashboard")}>
+          Go to Remote “dashboard”
+        </button>{" "}
+        &nbsp;|&nbsp;
+        <button onClick={() => goTo("/remote2")}>
+          Go to Remote “remote2”
+        </button>{" "}
+        &nbsp;|&nbsp;
+        <button onClick={() => goTo("/api/logout")}>Logout</button>
       </p>
     </div>
   );
