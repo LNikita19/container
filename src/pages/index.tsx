@@ -2,7 +2,6 @@
 
 import type { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
-import Link from "next/link";
 function decodeUser(token: string | undefined | null): string | null {
   if (!token) return null;
   try {
